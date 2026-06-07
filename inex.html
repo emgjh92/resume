@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>최재현 — IT 시스템 개발자</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --bg2: #141414;
+    --bg3: #1a1a1a;
+    --line: #2a2a2a;
+    --text: #e8e4dc;
+    --muted: #6b6760;
+    --accent: #c8a96e;
+    --accent2: #7eb8a4;
+    --accent3: #c87e7e;
+    --white: #f5f2ec;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── 사이드 네비 ── */
+  nav {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 220px;
+    background: var(--bg2);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    padding: 48px 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    padding: 0 28px 40px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+
+  .nav-logo .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo .title {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  nav a {
+    display: block;
+    padding: 10px 28px;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s, padding-left 0.2s;
+    position: relative;
+  }
+
+  nav a::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.2s;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--accent);
+    padding-left: 36px;
+  }
+
+  nav a:hover::before, nav a.active::before {
+    width: 20px;
+  }
+
+  /* ── 메인 콘텐츠 ── */
+  main {
+    margin-left: 220px;
+    min-height: 100vh;
+  }
+
+  section {
+    padding: 80px 64px;
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    max-width: 80px;
+  }
+
+  /* ── 히어로 ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: 'SCM';
+    position: absolute;
+    right: -40px; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    color: rgba(200, 169, 110, 0.04);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 15px;
+    color: #a09a90;
+    line-height: 1.9;
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  /* ── 연락처 ── */
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .contact-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-chip:hover { color: var(--accent); border-color: var(--accent); }
+  .contact-chip span { color: var(--accent2); margin-right: 6px; }
+
+  /* ── 역량 ── */
+  .strength-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .strength-item {
+    background: var(--bg2);
+    padding: 28px 32px;
+    transition: background 0.2s;
+  }
+
+  .strength-item:hover { background: var(--bg3); }
+
+  .strength-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .strength-title {
+    font-size: 15px;
+    color: var(--white);
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .strength-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── 스킬 ── */
+  .skill-group {
+    margin-bottom: 36px;
+  }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .tag-primary { background: rgba(200, 169, 110, 0.12); color: var(--accent); border: 1px solid rgba(200,169,110,0.25); }
+  .tag-secondary { background: rgba(126, 184, 164, 0.1); color: var(--accent2); border: 1px solid rgba(126,184,164,0.2); }
+  .tag-tertiary { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--line); }
+  .tag-new { background: rgba(200,126,126,0.1); color: var(--accent3); border: 1px solid rgba(200,126,126,0.2); }
+
+  /* ── 경력 ── */
+  .company-block {
+    margin-bottom: 64px;
+  }
+
+  .company-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    gap: 20px;
+  }
+
+  .company-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .company-role {
+    font-size: 13px;
+    color: var(--accent);
+    margin-top: 6px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+
+  .company-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .company-scale {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ── 프로젝트 ── */
+  .project {
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    transition: border-left-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+
+  .project:hover {
+    background: var(--bg3);
+    border-left-color: var(--accent2);
+  }
+
+  .project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    gap: 16px;
+  }
+
+  .project-title {
+    font-size: 15px;
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .project-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .project-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent3);
+    border: 1px solid rgba(200,126,126,0.4);
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: #7a7570;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .project-bullets {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  .project-bullets li {
+    font-size: 13px;
+    color: #8a8580;
+    padding: 3px 0 3px 16px;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  .project-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+  }
+
+  .project-result {
+    font-size: 13px;
+    color: var(--accent2);
+    padding: 10px 14px;
+    background: rgba(126,184,164,0.06);
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+
+  .project-result::before { content: '▸ '; }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tech-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  /* ── 학력/자격 ── */
+  .edu-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+
+  .edu-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    padding-top: 3px;
+  }
+
+  .edu-title {
+    font-size: 15px;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .edu-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .cert-card {
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+
+  .cert-card:hover { border-color: var(--accent); }
+
+  .cert-name {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .cert-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  /* ── 푸터 ── */
+  footer {
+    margin-left: 220px;
+    padding: 32px 64px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    main, footer { margin-left: 0; }
+    section { padding: 60px 28px; }
+    #hero { padding: 60px 28px; min-height: auto; padding-top: 80px; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; }
+    .strength-grid { grid-template-columns: 1fr; }
+    .company-header { flex-direction: column; }
+    .project-header { flex-direction: column; }
+    footer { padding: 24px 28px; flex-direction: column; gap: 8px; }
+    .edu-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="sidenav">
+  <div class="nav-logo">
+    <div class="name">최재현</div>
+    <div class="title">IT Developer</div>
+  </div>
+  <a href="#hero" class="active">Profile</a>
+  <a href="#strength">역량</a>
+  <a href="#skills">기술</a>
+  <a href="#experience">경력</a>
+  <a href="#education">학력</a>
+</nav>
+
+<main>
+
+  <!-- ── HERO ── -->
+  <section id="hero" class="visible">
+    <div class="hero-tag">IT System Developer · SCM/ERP Specialist</div>
+    <div class="hero-name">최재현</div>
+    <div class="hero-sub">Choi Jae-hyeon</div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-val" id="career-years">—</div>
+        <div class="stat-label">총 경력</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="age-display">—</div>
+        <div class="stat-label">만 나이</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">12개국</div>
+        <div class="stat-label">운영 SCM 규모</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">500+</div>
+        <div class="stat-label">연동 협력사</div>
+      </div>
+    </div>
+
+    <div class="hero-desc">
+      글로벌 공급망 시스템을 기획부터 개발·운영까지 직접 수행한 인하우스 IT 개발자.
+      12개국 · 500개 협력사 규모의 SCM 시스템을 단독 개발·운영하며
+      복잡한 비즈니스 로직 구현과 업무 자동화에 강점을 보유하고 있습니다.
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-chip"><span>✉</span>emgjh92@naver.com</div>
+      <div class="contact-chip"><span>☎</span>010-3022-6864</div>
+      <div class="contact-chip"><span>📍</span>경기도 성남시</div>
+      <div class="contact-chip"><span>🎂</span>1993.02.12</div>
+    </div>
+  </section>
+
+  <!-- ── 핵심 역량 ── -->
+  <section id="strength">
+    <div class="section-label">Core Strengths</div>
+    <div class="strength-grid">
+      <div class="strength-item">
+        <div class="strength-num">01</div>
+        <div class="strength-title">글로벌 SCM/ERP Full-cycle</div>
+        <div class="strength-desc">기획 → 개발 → 운영까지 인하우스에서 단독 수행. 12개국 · 500개 업체 규모 시스템 운영 경험.</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">02</div>
+        <div class="strength-title">복잡한 비즈니스 로직 구현</div>
+        <div class="strength-desc">주문 · 정산 · 무역 · 관세 · 생산 도메인의 복잡한 업무 로직을 시스템화한 경험 다수 보유.</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">03</div>
+        <div class="strength-title">AI 기반 업무 자동화</div>
+        <div class="strength-desc">Vision AI 활용 B/L · Invoice 검수 자동화. RPA로 불가능했던 비정형 문서 처리를 AI로 해결.</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">04</div>
+        <div class="strength-title">기간계 시스템 연동</div>
+        <div class="strength-desc">EDI · MES · ERP 등 다수 기간계 시스템과의 데이터 Sync 설계 및 운영. XML 기반 데이터 정합성 관리.</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">05</div>
+        <div class="strength-title">정량적 성과 창출</div>
+        <div class="strength-desc">월 2,000건 이메일 자동화(87% 감소) · 공장당 연 500만원 비용 절감 · 17개 공장 동시 적용 등.</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">06</div>
+        <div class="strength-title">IT PM · 운영 기획</div>
+        <div class="strength-desc">ITO 계약 · 하도급 관리 · 보안 솔루션 운영 · 사용자 교육까지 개발 외 운영 전반 수행 경험.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 기술 스택 ── -->
+  <section id="skills">
+    <div class="section-label">Tech Stack</div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Language & Framework</div>
+      <div class="skill-tags">
+        <span class="tag tag-primary">Java</span>
+        <span class="tag tag-primary">Spring MVC</span>
+        <span class="tag tag-secondary">JavaScript</span>
+        <span class="tag tag-secondary">JSP</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Database</div>
+      <div class="skill-tags">
+        <span class="tag tag-primary">MSSQL</span>
+        <span class="tag tag-secondary">Procedure / Trigger / Index</span>
+        <span class="tag tag-secondary">Job Batch</span>
+        <span class="tag tag-tertiary">PostgreSQL</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Frontend / Tool</div>
+      <div class="skill-tags">
+        <span class="tag tag-primary">Nexacro Platform 17</span>
+        <span class="tag tag-secondary">OZ Report</span>
+        <span class="tag tag-tertiary">EDI / XML</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Server / Infra</div>
+      <div class="skill-tags">
+        <span class="tag tag-secondary">Windows Server (IIS)</span>
+        <span class="tag tag-secondary">Linux (CentOS)</span>
+        <span class="tag tag-secondary">Tomcat</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">AI · 최근 활용</div>
+      <div class="skill-tags">
+        <span class="tag tag-new">Claude Code</span>
+        <span class="tag tag-new">Gemini API</span>
+        <span class="tag tag-new">Vision AI</span>
+        <span class="tag tag-new">LibreOffice 자동화</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">어학</div>
+      <div class="skill-tags">
+        <span class="tag tag-secondary">영어 — 비즈니스 회화</span>
+        <span class="tag tag-tertiary">TOEIC Speaking IH</span>
+        <span class="tag tag-tertiary">TOEIC Writing AL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 경력 ── -->
+  <section id="experience">
+    <div class="section-label">Experience</div>
+
+    <!-- 세아상역 -->
+    <div class="company-block">
+      <div class="company-header">
+        <div>
+          <div class="company-name">세아상역㈜</div>
+          <div class="company-role">전략기획총괄 IT본부 · 대리 · SCM/ERP 시스템 담당</div>
+          <div class="company-scale">의류 제조 대기업 · 연매출 약 2조 3,000억 · 사원수 871명</div>
+        </div>
+        <div class="company-period">
+          2022.01 — 현재<br>
+          <span style="color:var(--accent);font-size:11px;" id="seah-period">재직중</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">AI 기반 B/L · Invoice 검수 시스템 개발<span class="project-badge">진행중</span></div>
+          <div class="project-period">2026.03 —</div>
+        </div>
+        <div class="project-desc">300개 Shipper · 8개 포워더가 각기 다른 양식으로 제출하는 B/L 및 Invoice를 자동 검수하는 시스템. RPA로 불가능했던 비정형 서류 검수를 Vision AI로 해결.</div>
+        <div class="project-result">업무 전면 자동화 → 현업 처리 리드타임 단축 및 운영 부담 대폭 감소</div>
+        <div class="project-tech">
+          <span class="tech-tag">Claude Code</span>
+          <span class="tech-tag">Gemini API 2.5 Flash</span>
+          <span class="tech-tag">LibreOffice</span>
+          <span class="tech-tag">JSP</span>
+          <span class="tech-tag">Java</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">벤더 정산 Invoice / ESG Certification 등록 처리 개발</div>
+          <div class="project-period">2025.05 — 2025.09</div>
+        </div>
+        <div class="project-desc">수기(엑셀·메일) 중심 벤더 정산 및 연간 ESG 공장 인증 프로세스를 End-to-End 시스템화.</div>
+        <ul class="project-bullets">
+          <li>예외 케이스(재등록 · 반려 · 수정) 대응을 위한 상태값 기반 처리 흐름 설계</li>
+          <li>등록 → 이력관리까지 전 과정 자동화 및 로그 관리 적용</li>
+        </ul>
+        <div class="project-result">업무 전면 자동화 → 처리 리드타임 단축 및 운영 부담 감소</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">JSP</span>
+          <span class="tech-tag">MSSQL</span>
+          <span class="tech-tag">Nexacro 17.1</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">Vendor 업체 평가 및 최적 선택(Scoring/등급) 시스템 개발</div>
+          <div class="project-period">2025.03 — 2025.04</div>
+        </div>
+        <div class="project-desc">업체별 QA · 컴플라이언스 · 재무건전성 · 계약 평가 항목 점수화 및 등급 산정 시스템.</div>
+        <ul class="project-bullets">
+          <li>평가 기준 변경을 고려한 유연한 화면/DB 구조 설계</li>
+          <li>평가 결과 기반 리포트 체계 구축으로 벤더 비교·선정 의사결정 지원</li>
+        </ul>
+        <div class="project-result">외주 공장 Scoring 기반 라인 확보 의사결정 기여 및 평가 프로세스 표준화</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">JSP</span>
+          <span class="tech-tag">MSSQL</span>
+          <span class="tech-tag">Nexacro 17.1</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">Garment 포장 Carton 라벨링 자동 출력 시스템</div>
+          <div class="project-period">2024.07 — 2025.02</div>
+        </div>
+        <div class="project-desc">바이어 시스템 다운로드 파일을 사내 기준으로 정제해 DB에 자동 반영하는 ETL 파이프라인 및 생산 공장용 라벨 자동 출력 시스템.</div>
+        <div class="project-result">공장 1개당 연 500만원 비용 절감 · 5개국 17개 공장 적용 완료</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">MSSQL</span>
+          <span class="tech-tag">Nexacro 17.1</span>
+          <span class="tech-tag">OZ Report</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">완제품 수출 LDP Order 적용 및 관세 리포트 자동화</div>
+          <div class="project-period">2024.03 — 2024.07</div>
+        </div>
+        <div class="project-desc">미국 바이어 LDP Incoterms 거래 신규 적용. 기존 DDP 프로세스 확장으로 주문→정산→리포트 프로세스 정립 및 관세 리포트 자동 생성.</div>
+        <div class="project-result">LDP 거래 프로세스 안정적 적용 및 리포트 자동화로 운영 효율 향상</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">MSSQL</span>
+          <span class="tech-tag">Nexacro 17.1</span>
+          <span class="tech-tag">OZ Report</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">글로벌 선적 스케줄 예약(Vessel Booking) 자동화 시스템</div>
+          <div class="project-period">2022.06 — 2023.12</div>
+        </div>
+        <div class="project-desc">물류 지식이 없는 원단 업체 담당자도 직접 선적 예약이 가능한 End-to-End 자동화 시스템.</div>
+        <ul class="project-bullets">
+          <li>PO 기반 출발/도착 PORT 자동 매핑 및 Rule-Based 포워더 자동 매칭 엔진 개발</li>
+          <li>최적 Vessel 스케줄 자동 매칭(일정·비용·경로 조건) 및 실시간 조회 체계 구축</li>
+          <li>다자간 워크플로우(Request→Confirm→Revise→Roll Over) 상태 관리 및 Pre-Alert 메일 자동 발송</li>
+        </ul>
+        <div class="project-result">월 2,000건 이메일 커뮤니케이션 자동화 → Workload 연 87% 감소</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">MSSQL</span>
+          <span class="tech-tag">Nexacro 17.1</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">선적 최소 단위 기준 QR Code 자동 생성 시스템</div>
+          <div class="project-period">2022.06 — 2023.12</div>
+        </div>
+        <div class="project-desc">선적 최소 단위(Roll) 기준 고유 관리번호 생성 로직 설계 및 QR Code 자동 생성 · 프린팅 연계 기능 개발.</div>
+        <div class="project-result">수기 구분 업무를 QR 기반으로 대체하여 현장 Workload 감소</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">MSSQL</span>
+          <span class="tech-tag">Nexacro 17.1</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">관세·Trucking Invoice 프로세스 및 공통 DB Function 표준화</div>
+          <div class="project-period">2025.03 — 2025.04</div>
+        </div>
+        <div class="project-desc">1st/2nd Trucking Invoice 청구 프로세스 구현 및 국가·ETA/ETD·바이어·Factory 조건별 공통 Function 설계. SCM/ERP 전반 일원화 적용.</div>
+        <div class="project-result">대내외 관세 정책 변경에 즉각 대응 가능한 구조로 개선</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">MSSQL</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">SCM 내 MBS(Mass Balance Sheet) 기능 개발</div>
+          <div class="project-period">2022.05 — 2022.07</div>
+        </div>
+        <div class="project-desc">원료→공정→Packing List 선적까지 추적 가능한 물질수지 시트 기능. 공정별 데이터 업/다운로드, 자동 Validation, Shipment Packing List 연동.</div>
+        <div class="project-result">메인 바이어 요구 기능 사내 시스템 구현으로 대응력 강화</div>
+        <div class="project-tech">
+          <span class="tech-tag">Spring(Java)</span>
+          <span class="tech-tag">MSSQL</span>
+          <span class="tech-tag">Nexacro 17.1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NS홈쇼핑 -->
+    <div class="company-block">
+      <div class="company-header">
+        <div>
+          <div class="company-name">㈜엔에스쇼핑 (NS홈쇼핑)</div>
+          <div class="company-role">IT본부 정보기획팀 · 사원 · IT 기획·보안 솔루션 운영</div>
+          <div class="company-scale">홈쇼핑·유통 대기업 (하림그룹) · 연매출 약 6,100억 · 사원수 540명</div>
+        </div>
+        <div class="company-period">2020.09 — 2021.06<br><span style="color:var(--muted);font-size:11px;">10개월</span></div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">IT 운영 프로세스·정책 수립 및 보안 솔루션 운영</div>
+          <div class="project-period">2020.09 — 2021.06</div>
+        </div>
+        <ul class="project-bullets">
+          <li>시스템·자산 변경관리/형상관리 기준 수립 (요청→검토→승인→적용→사후점검 프로세스 정의)</li>
+          <li>사내 스팸 방지 · 망 연계 솔루션 계정/권한 관리 및 장애/오탐 이슈 대응</li>
+          <li>신규 인프라/보안 솔루션 도입 검토 및 PMO 지원 (요건 정리 · 일정/이슈 트래킹)</li>
+          <li>연간 IT 계약 통합 관리 및 증빙/이력 정리</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 학력 / 자격 ── -->
+  <section id="education">
+    <div class="section-label">Education & Certification</div>
+
+    <div class="edu-item">
+      <div class="edu-period">2016.03 — 2019.02</div>
+      <div>
+        <div class="edu-title">세종대학교</div>
+        <div class="edu-sub">정보보호학과 졸업 (편입학) · 학점 3.18 / 4.5</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-period">2011.03 — 2016.02</div>
+      <div>
+        <div class="edu-title">한국산업기술대학교</div>
+        <div class="edu-sub">컴퓨터공학과 중퇴 · 학점 3.01 / 4.5</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-period">2013.01 — 2015.01</div>
+      <div>
+        <div class="edu-title">병역 — 공군 현역 만기제대</div>
+        <div class="edu-sub">병장 · 정보통신</div>
+      </div>
+    </div>
+
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-name">정보처리기사</div>
+        <div class="cert-date">2019.05 · 한국산업인력공단</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">리눅스 마스터 2급</div>
+        <div class="cert-date">2020.01 · KAIT</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">TOEIC Speaking IH / Writing AL</div>
+        <div class="cert-date">2025.08 · ETS</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Nexacro Platform 17</div>
+        <div class="cert-date">2019 — 2022 · 투비소프트</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-note">최재현 · IT System Developer · <span id="footer-year"></span></div>
+  <div class="footer-note">emgjh92@naver.com · 010-3022-6864</div>
+</footer>
+
+<script>
+  // ── 만 나이 자동 계산 ──
+  function calcAge() {
+    const birth = new Date(1993, 1, 12); // 1993.02.12 (월은 0-indexed)
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    return age;
+  }
+
+  // ── 총 경력 자동 계산 ──
+  // 세아상역: 2022.01.01 ~ 현재
+  // NS홈쇼핑: 2020.09.01 ~ 2021.06.30 (10개월)
+  function calcCareer() {
+    const today = new Date();
+
+    // 세아상역 재직 기간
+    const seahStart = new Date(2022, 0, 1);
+    let seahMonths = (today.getFullYear() - seahStart.getFullYear()) * 12
+                    + (today.getMonth() - seahStart.getMonth());
+
+    // NS홈쇼핑 (고정 10개월)
+    const nsMonths = 10;
+
+    const totalMonths = seahMonths + nsMonths;
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+
+    let result = '';
+    if (years > 0) result += years + '년 ';
+    if (months > 0) result += months + '개월';
+    return result.trim();
+  }
+
+  // ── 세아상역 재직 기간 표시 ──
+  function calcSeahPeriod() {
+    const start = new Date(2022, 0, 1);
+    const today = new Date();
+    let months = (today.getFullYear() - start.getFullYear()) * 12
+               + (today.getMonth() - start.getMonth());
+    const years = Math.floor(months / 12);
+    const m = months % 12;
+    let s = '재직중 · ';
+    if (years > 0) s += years + '년 ';
+    if (m > 0) s += m + '개월';
+    return s;
+  }
+
+  // ── 적용 ──
+  document.getElementById('age-display').textContent = calcAge() + '세';
+  document.getElementById('career-years').textContent = calcCareer();
+  document.getElementById('seah-period').textContent = calcSeahPeriod();
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // ── 스크롤 인터섹션 애니메이션 ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('section:not(#hero)').forEach(s => observer.observe(s));
+
+  // ── 네비 활성화 ──
+  const navLinks = document.querySelectorAll('nav a');
+  const sections = document.querySelectorAll('section');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
